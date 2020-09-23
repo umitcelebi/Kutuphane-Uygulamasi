@@ -1,0 +1,230 @@
+
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="ISO-8859-1">
+<title>Home</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+
+	<!--  START OF NAVBAR MENU -->
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark" sec:authorize="isAuthenticated()">
+
+		<!-- Links -->
+		<ul class="navbar-nav" >
+
+			<!-- Dropdown -->
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" id="navbardrop"
+				data-toggle="dropdown"> Book </a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="/home/cbook"  sec:authorize="hasRole('ROLE_ADMIN')">Book Add</a> <a
+						class="dropdown-item" href="/home/books">List of Book</a>
+				</div>
+			</li>
+
+			<!-- Dropdown -->
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" id="navbardrop"
+				data-toggle="dropdown"> Author </a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="/home/cauthor"  sec:authorize="hasRole('ROLE_ADMIN')">Author Add</a> <a
+						class="dropdown-item" href="/home/authors">List of Author</a>
+				</div>
+			</li>
+
+			<!-- Dropdown -->
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" id="navbardrop"
+				data-toggle="dropdown"> Publisher </a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="/home/cpublisher"  sec:authorize="hasRole('ROLE_ADMIN')">Publisher Add</a> <a
+						class="dropdown-item" href="/home/publishers">List of Publisher</a>
+				</div>
+			</li>
+		</ul>
+		<ul class="nav navbar-nav ml-auto">
+		    <li class="nav-item">
+		    	<form th:action="@{/logout}" method="post">
+		      		<button class="nav-link" type="submit">Logout</button>
+		      	</form>
+		    </li>
+	    </ul>
+	</nav>
+	<!--  ENF OF NAVBAR MENU -->
+
+	<br>
+
+
+	
+	<div class="container" th:if="${books != null}">
+	
+		<!--  START OF SEARCH  -->
+		<div id="flip">SEARCH</div>
+		<div id="panel">
+			<form th:action="@{/home/searc_book}" method="get">
+		
+			<div class="form-group">
+		      <label for="bookName">Book Name</label>
+		      <input type="text" class="form-control" id="bookName" placeholder="Enter Book Name" name="bookName">
+		    </div>
+		    
+		    <div class="form-group">
+		      <label for="seriesName">Series Name</label>
+		      <input type="text" class="form-control" id="seriesName" placeholder="Enter Series Name" name="seriesName">
+		    </div>
+		    
+		    <div class="form-group">
+		      <label for="isbn">Book Name</label>
+		      <input type="text" class="form-control" id="isbn" placeholder="Enter ISBN" name="isbn">
+		    </div>
+		    
+		    <div class="form-group">
+		      <label for="authorName">Author Name</label>
+		      <input type="text" class="form-control" id="authorName" placeholder="Enter Author" name="authorName">
+		    </div>
+		    
+		    <button type="submit" class="btn btn-primary">Submit</button>
+			
+		</form>
+		</div>
+		
+	
+		<!--  ENF OF SEARCH  -->
+		<br>
+		
+		<!--  START OF BOOK TABLE -->
+		
+		<h2>Books</h2>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>SubName</th>
+					<th>Series Name</th>
+					<th>ISBN</th>
+					<th>Author</th>
+					<th>Publisher</th>
+					<th>Description</th>
+					<th>Delete</th>
+					<th>Update</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="book:${books}">
+					<td th:text="${book.id}"></td>
+					<td th:text="${book.bookName}"></td>
+					<td th:text="${book.subName}"></td>
+					<td th:text="${book.seriesName}"></td>
+					<td th:text="${book.isbn}"></td>
+					<td th:text="${book.author}"></td>
+					<td th:text="${book.publisher}"></td>
+					<td th:text="${book.description}"></td>
+					<td> <a th:href="@{/book/delete/{id}(id=${book.id})}"
+											class="btn btn-primary"><i class="fas fa-trash-alt"></i></a></td>
+					<td> <a th:href="@{/home/uBook/{id}(id=${book.id})}"
+											class="btn btn-primary"><i class="fas fa-edit"></i></a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<!--  ENF OF BOOK TABLE -->
+
+
+	<!--  START OF AUTHOR TABLE -->
+	<div class="container" th:if="${authors != null}">
+		<h2>Authors</h2>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Description</th>
+					<th>Delete</th>
+					<th>Update</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="author:${authors}">
+					<td th:text="${author.id}"></td>
+					<td th:text="${author.name}"></td>
+					<td th:text="${author.description}"></td>
+					<td> <a th:href="@{/author/delete/{id}(id=${author.id})}"
+											class="btn btn-primary"><i class="fas fa-trash-alt"></i></a></td>
+					<td> <a th:href="@{/home/uAuthor/{id}(id=${author.id})}"
+											class="btn btn-primary"><i class="fas fa-edit"></i></a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<!--  END OF AUTHOR TABLE -->
+
+
+	<!--  START OF PUBLISHER TABLE -->
+	<div class="container" th:if="${publishers != null}">
+	
+	
+		<h2>Publishers</h2>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Description</th>
+					<th>Delete</th>
+					<th>Update</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="publisher:${publishers}">
+					<td th:text="${publisher.id}"></td>
+					<td th:text="${publisher.name}"></td>
+					<td th:text="${publisher.description}"></td>
+					<td> <a th:href="@{/publisher/delete/{id}(id=${publisher.id})}"
+											class="btn btn-primary"><i class="fas fa-trash-alt"></i></a></td>
+					<td> <a th:href="@{/home/uPublisher/{id}(id=${publisher.id})}"
+											class="btn btn-primary"><i class="fas fa-edit"></i></a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<!--  END OF PUBLISHER TABLE -->
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script> 
+$(document).ready(function(){
+  $("#flip").click(function(){
+    $("#panel").slideToggle("slow");
+  });
+});
+</script>
+<style> 
+#panel, #flip {
+  padding: 5px;
+  text-align: center;
+  background-color: #e5eecc;
+  border: solid 1px #c3c3c3;
+}
+
+#panel {
+  padding: 50px;
+  display: none;
+}
+</style>
+
+</body>
+</html>

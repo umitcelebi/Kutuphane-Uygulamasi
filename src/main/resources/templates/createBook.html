@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="ISO-8859-1">
+<title>Home</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<!--  START OF NAVBAR MENU -->
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark" sec:authorize="isAuthenticated()">
+
+		<!-- Links -->
+		<ul class="navbar-nav" >
+
+			<!-- Dropdown -->
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" id="navbardrop"
+				data-toggle="dropdown"> Book </a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="/home/cbook"  sec:authorize="hasRole('ROLE_ADMIN')">Book Add</a> <a
+						class="dropdown-item" href="/home/books">List of Book</a>
+				</div>
+			</li>
+
+			<!-- Dropdown -->
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" id="navbardrop"
+				data-toggle="dropdown"> Author </a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="/home/cauthor"  sec:authorize="hasRole('ROLE_ADMIN')">Author Add</a> <a
+						class="dropdown-item" href="/home/authors">List of Author</a>
+				</div>
+			</li>
+
+			<!-- Dropdown -->
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" id="navbardrop"
+				data-toggle="dropdown"> Publisher </a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="/home/cpublisher"  sec:authorize="hasRole('ROLE_ADMIN')">Publisher Add</a> <a
+						class="dropdown-item" href="/home/publishers">List of Publisher</a>
+				</div>
+			</li>
+		</ul>
+		<ul class="nav navbar-nav ml-auto">
+		    <li class="nav-item">
+		    	<form th:action="@{/logout}" method="post">
+		      		<button class="nav-link dark" type="submit">Logout</button>
+		      	</form>
+		    </li>
+	    </ul>
+	</nav>
+	<!--  ENF OF NAVBAR MENU -->
+
+	<br>
+	
+
+	<div class="container">
+		<h2>Create Book</h2>
+		<form th:action="@{/book/create}" method="post" th:object="${book}" >
+			<div class="form-group"> 
+				<input type="text" class="form-control" id="id" name="id" readonly="true" th:field="*{id}">
+			</div>
+			
+			<div class="form-group">
+				<label for="bookName">Book Name:</label> 
+				<input type="text" class="form-control" id="bookName" name="bookName" th:field="*{bookName}" placeholder="Enter Book Name">
+			</div>
+			
+			<div class="form-group">
+				<label for="subName">Book Subname:</label> 
+				<input type="text" class="form-control" id="subName" name="subName" th:field="*{subName}"  placeholder="Enter Book Subname">
+			</div>
+			
+			<div class="form-group">
+				<label for="seriesName">Book Series Name:</label> 
+				<input type="text" class="form-control" id="seriesName" name="seriesName" th:field="*{seriesName}"  placeholder="Enter Series Name">
+			</div>
+			
+			<div class="form-group">
+				<label for="isbn">ISBN:</label> 
+				<input type="text" class="form-control" id="isbn" name="isbn" th:field="*{isbn}"  placeholder="Enter ISBN">
+			</div>
+			
+			<div class="form-group">
+				<label for="description">Description:</label> 
+				<input type="text" class="form-control" id="description" name="description"  th:field="*{description}"  placeholder="Enter Description">
+			</div>
+			
+			<div class="form-group">
+			    <label for="author">Author</label>
+			    <select class="form-control" id="author" name="author">
+			     	<option></option>
+			     	<option th:each="author:${authors}" th:value="${author.id}" th:text="${author.name}" ></option>
+			    </select>	
+			</div>
+			
+			<div class="form-group">
+			    <label for="author">Publisher</label>
+			    <select class="form-control" id="publisher" name="publisher" >
+			    	<option></option>
+			    	<option th:each="publisher:${publishers}" th:value="${publisher.id}" th:text="${publisher.name}" ></option>
+			    </select>	
+			</div>
+
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+	</div>
+
+</body>
+</html>
