@@ -132,9 +132,9 @@
 					<td th:text="${book.author}"></td>
 					<td th:text="${book.publisher}"></td>
 					<td th:text="${book.description}"></td>
-					<td> <a th:href="@{/book/delete/{id}(id=${book.id})}"
+					<td sec:authorize="hasRole('ROLE_ADMIN')"> <a th:href="@{/book/delete/{id}(id=${book.id})}"
 											class="btn btn-primary"><i class="fas fa-trash-alt"></i></a></td>
-					<td> <a th:href="@{/home/uBook/{id}(id=${book.id})}"
+					<td sec:authorize="hasRole('ROLE_ADMIN')"> <a th:href="@{/home/uBook/{id}(id=${book.id})}"
 											class="btn btn-primary"><i class="fas fa-edit"></i></a></td>
 				</tr>
 			</tbody>
@@ -161,9 +161,9 @@
 					<td th:text="${author.id}"></td>
 					<td th:text="${author.name}"></td>
 					<td th:text="${author.description}"></td>
-					<td> <a th:href="@{/author/delete/{id}(id=${author.id})}"
+					<td sec:authorize="hasRole('ROLE_ADMIN')"> <a th:href="@{/author/delete/{id}(id=${author.id})}"
 											class="btn btn-primary"><i class="fas fa-trash-alt"></i></a></td>
-					<td> <a th:href="@{/home/uAuthor/{id}(id=${author.id})}"
+					<td sec:authorize="hasRole('ROLE_ADMIN')"> <a th:href="@{/home/uAuthor/{id}(id=${author.id})}"
 											class="btn btn-primary"><i class="fas fa-edit"></i></a></td>
 				</tr>
 			</tbody>
@@ -192,9 +192,9 @@
 					<td th:text="${publisher.id}"></td>
 					<td th:text="${publisher.name}"></td>
 					<td th:text="${publisher.description}"></td>
-					<td> <a th:href="@{/publisher/delete/{id}(id=${publisher.id})}"
+					<td sec:authorize="hasRole('ROLE_ADMIN')"> <a th:href="@{/publisher/delete/{id}(id=${publisher.id})}"
 											class="btn btn-primary"><i class="fas fa-trash-alt"></i></a></td>
-					<td> <a th:href="@{/home/uPublisher/{id}(id=${publisher.id})}"
+					<td sec:authorize="hasRole('ROLE_ADMIN')"> <a th:href="@{/home/uPublisher/{id}(id=${publisher.id})}"
 											class="btn btn-primary"><i class="fas fa-edit"></i></a></td>
 				</tr>
 			</tbody>
