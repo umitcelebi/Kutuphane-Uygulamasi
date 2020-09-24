@@ -35,8 +35,8 @@ public class BookController {
 									@RequestParam(name = "seriesName") String seriesName,
 									@RequestParam(name = "isbn") String isbn,
 									@RequestParam(name = "description") String description,
-									@RequestParam(name = "author",required = false) int authorId,
-									@RequestParam(name = "publisher",required = false) int publisherId) {
+									@RequestParam(name = "author",required = false,defaultValue = "0") int authorId,
+									@RequestParam(name = "publisher",required = false,defaultValue = "0") int publisherId) {
 		
 		Author author=authorService.getOne(authorId);
 		Publisher publisher=publisherService.getOne(publisherId);
