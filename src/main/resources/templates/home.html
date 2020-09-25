@@ -15,11 +15,30 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"  type='text/css'>
+
+<style>
+body{
+background: #D8DFE9;
+}
+
+#panel, #flip {
+  padding: 5px;
+  text-align: center;
+  background-color: #BCC7D6;
+  border: solid 1px #c3c3c3;
+}
+
+#panel {
+  padding: 50px;
+  display: none;
+}
+
+</style>
 </head>
 <body>
 
 	<!--  START OF NAVBAR MENU -->
-	<nav class="navbar navbar-expand-sm bg-dark navbar-dark" sec:authorize="isAuthenticated()">
+	<nav class="navbar navbar-expand-sm navbar-light bg-secondary" sec:authorize="isAuthenticated()">
 
 		<!-- Links -->
 		<ul class="navbar-nav" >
@@ -57,7 +76,7 @@
 		<ul class="nav navbar-nav ml-auto">
 		    <li class="nav-item">
 		    	<form th:action="@{/logout}" method="post">
-		      		<button class="nav-link btn btn-danger" type="submit">Logout</button>
+		      		<button class="nav-link btn btn-info" type="submit">Logout</button>
 		      	</form>
 		    </li>
 	    </ul>
@@ -133,7 +152,7 @@
 					<td th:text="${book.publisher}"></td>
 					<td th:text="${book.description}"></td>
 					<td sec:authorize="hasRole('ROLE_ADMIN')"> <a th:href="@{/book/delete/{id}(id=${book.id})}"
-											class="btn btn-primary"><span><i class="fa fa-trash"></i></span></a></td>
+											class="btn btn-danger"><span><i class="fa fa-trash"></i></span></a></td>
 					<td sec:authorize="hasRole('ROLE_ADMIN')"> <a th:href="@{/home/uBook/{id}(id=${book.id})}"
 											class="btn btn-primary"><span><i class="fa fa-edit"></i></span></a></td>
 				</tr>
@@ -162,7 +181,7 @@
 					<td th:text="${author.name}"></td>
 					<td th:text="${author.description}"></td>
 					<td sec:authorize="hasRole('ROLE_ADMIN')"> <a th:href="@{/author/delete/{id}(id=${author.id})}"
-											class="btn btn-primary"><span><i class="fa fa-trash"></i></span></a></td>
+											class="btn btn-danger"><span><i class="fa fa-trash"></i></span></a></td>
 					<td sec:authorize="hasRole('ROLE_ADMIN')"> <a th:href="@{/home/uAuthor/{id}(id=${author.id})}"
 											class="btn btn-primary"><span><i class="fa fa-edit"></i></span></a></td>
 				</tr>
@@ -193,7 +212,7 @@
 					<td th:text="${publisher.name}"></td>
 					<td th:text="${publisher.description}"></td>
 					<td sec:authorize="hasRole('ROLE_ADMIN')"> <a th:href="@{/publisher/delete/{id}(id=${publisher.id})}"
-											class="btn btn-primary"><span><i class="fa fa-trash"></i></span></a></td>
+											class="btn btn-danger"><span><i class="fa fa-trash"></i></span></a></td>
 					<td sec:authorize="hasRole('ROLE_ADMIN')"> <a th:href="@{/home/uPublisher/{id}(id=${publisher.id})}"
 											class="btn btn-primary"><span><i class="fa fa-edit"></i></span></a></td>
 				</tr>
@@ -212,19 +231,6 @@ $(document).ready(function(){
   });
 });
 </script>
-<style> 
-#panel, #flip {
-  padding: 5px;
-  text-align: center;
-  background-color: #e5eecc;
-  border: solid 1px #c3c3c3;
-}
-
-#panel {
-  padding: 50px;
-  display: none;
-}
-</style>
 
 </body>
 </html>
