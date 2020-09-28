@@ -9,17 +9,18 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.ucelebi.models.User;
-import com.ucelebi.repo.UserRepository;
+import com.ucelebi.service.UserService;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService{
 
 	@Autowired
-	private UserRepository userRepository;
+	private UserService userService;
+	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		Optional<User> user=userRepository.findByUsername(username);
+		Optional<User> user=userService.findByUsername(username);
 		
 		user.orElseThrow(()->new UsernameNotFoundException("Not Found "+username));
 		
